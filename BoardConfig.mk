@@ -59,9 +59,8 @@ BOARD_USE_HDMI_AUDIO_ALWAYS := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
+BLUETOOTH_HCI_USE_USB := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := $(LOCAL_PATH)/bluetooth/libbt_vndcfg.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -112,18 +111,21 @@ COMMON_GLOBAL_CFLAGS += -DUSE_NATIVE_SEC_NV12TILED # use format from fw/native
 #BOARD_USES_LEGACY_RIL := true
 
 # Wifi
-BOARD_HAVE_SAMSUNG_WIFI          := true
-BOARD_WLAN_DEVICE                := bcmdhd
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA          := "/system/etc/wifi/bcmdhd_sta.bin"
-WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_P2P          := "/system/etc/wifi/bcmdhd_p2p.bin"
-WIFI_BAND                        := 802_11_ABG
+WIFI_DRIVER_MODULE_NAME             := "rtl8192cu"
+WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8192cu.ko"
+WPA_SUPPLICANT_VERSION              := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
+#
+# Realtek driver has FW embedded inside, and will automatically load FW
+# at NIC initialization process. So there is no need to set these 
+# 5 variables.
+WIFI_DRIVER_MODULE_ARG           := ""
+WIFI_FIRMWARE_LOADER             := ""
+WIFI_DRIVER_FW_PATH_STA          := ""
+WIFI_DRIVER_FW_PATH_AP           := ""
+WIFI_DRIVER_FW_PATH_P2P          := ""
+WIFI_DRIVER_FW_PATH_PARAM        := ""
 
 # Webkit
 ENABLE_WEBGL := true
