@@ -111,11 +111,25 @@ COMMON_GLOBAL_CFLAGS += -DUSE_NATIVE_SEC_NV12TILED # use format from fw/native
 #BOARD_USES_LEGACY_RIL := true
 
 # Wifi
+#
+# realtek = rtl8192cu(WEXT/NL80211), r8712u(WEXT)
+#
+BOARD_WIFI_VENDOR	:= realtek
+BOARD_WLAN_DEVICE	:= rtl8192cu
+
+# drivers/net/wireless/rtl8191su
 WIFI_DRIVER_MODULE_NAME             := "rtl8192cu"
 WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8192cu.ko"
+
 WPA_SUPPLICANT_VERSION              := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
+
+#WPA_SUPPLICANT_VERSION              := VER_0_8_X
+#BOARD_WPA_SUPPLICANT_DRIVER         := NL80211
 #BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
+#BOARD_HOSTAPD_DRIVER                := NL80211
+#BOARD_HOSTAPD_PRIVATE_LIB           := lib_driver_cmd_rtl
 #
 # Realtek driver has FW embedded inside, and will automatically load FW
 # at NIC initialization process. So there is no need to set these 
