@@ -194,6 +194,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.root_access=3 \
     debug.sf.no_hw_vsync=1 \
     mouse.right.click=back \
+    ro.rfkilldisabled=1 \
     wifi.interface=wlan0
 
 # Permissions

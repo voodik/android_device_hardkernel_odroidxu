@@ -110,3 +110,9 @@
 
 # Vibetonz
 /dev/tspdrv               0660   root       shell
+
+# for bluetooth nodes
+/dev/uhid                 0660    bluetooth bluetooth
+ 
+# bluetooth device
+/dev/bus/usb/001/005      0660    bluetooth bluetooth
