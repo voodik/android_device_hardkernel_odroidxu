@@ -22,8 +22,8 @@ LOCAL_PATH := device/hardkernel/odroidxu
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -59,10 +59,6 @@ PRODUCT_PACKAGES += \
 	tinymix
 	
 
-# Bluetooth
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/bluetooth/bcm4335_prepatch.hcd:system/vendor/firmware/bcm4335_prepatch.hcd
-
 # Camera
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/configs/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
@@ -87,10 +83,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     hwcomposer.exynos5 \
     libion
-
-# IR
-#PRODUCT_PACKAGES += \
-#    consumerir.odroidxu
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -119,20 +111,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     mcDriverDaemon
 
-# NFC
-#PRODUCT_PACKAGES += \
-#    libnfc-nci \
-#    libnfc_nci_jni \
-#    nfc_nci.odroidxu \
-#    NfcNci \
-#    Tag \
-#    com.android.nfc_extras
-
-# NFCEE access control + configuration
-#NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
-#PRODUCT_COPY_FILES += \
-#    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
-#    $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -144,9 +122,6 @@ PRODUCT_PACKAGES += \
     libstagefrighthw
 
 # Radio
-#PRODUCT_PACKAGES += \
-#    libsecril-client \
-#    libsecril-client-sap
 PRODUCT_PACKAGES += \
 	rild \
 	chat
@@ -159,14 +134,6 @@ PRODUCT_PACKAGES += \
 #PRODUCT_PACKAGES += \
 #    SamsungServiceMode
 
-# Torch
-#PRODUCT_PACKAGES += \
-#    Torch
-
-# Wifi
-PRODUCT_PACKAGES += \
-    libnetcmdiface \
-    macloader
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
@@ -177,7 +144,6 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-#    qemu.hw.mainkeys=0 \
     persist.sys.usb.config=mass_storage \
     ro.kernel.android.checkjni=0 
 
@@ -209,7 +175,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
