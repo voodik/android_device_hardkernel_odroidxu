@@ -113,36 +113,43 @@ COMMON_GLOBAL_CFLAGS += -DUSE_NATIVE_SEC_NV12TILED # use format from fw/native
 #BOARD_MODEM_TYPE := xmm6360
 #BOARD_USES_LEGACY_RIL := true
 
-# Wifi
 #
-# realtek = rtl8192cu(WEXT/NL80211), r8712u(WEXT)
+# Wifi related defines
+#
+# ralink module = rt5370sta, realtek = rtl8191su
 #
 BOARD_WIFI_VENDOR	:= realtek
-BOARD_WLAN_DEVICE	:= rtl8192cu
+BOARD_WLAN_DEVICE	:= rtl819xxu
 
-# drivers/net/wireless/rtl8191su
-WIFI_DRIVER_MODULE_NAME             := "rtl8192cu"
-WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8192cu.ko"
+ifeq ($(BOARD_WLAN_DEVICE), rt5370sta)
+    WPA_SUPPLICANT_VERSION              := VER_0_8_X
+    BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
+    BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd
+    WIFI_DRIVER_MODULE_NAME		        := "rt5370sta"
+    WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rt5370sta.ko"
+endif    
 
-WPA_SUPPLICANT_VERSION              := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
+ifeq ($(BOARD_WLAN_DEVICE), rtl819xxu)
+    WPA_SUPPLICANT_VERSION              := VER_0_8_X
+    BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
+    BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
+    WIFI_DRIVER_MODULE_NAME		        := "rtl8191su"
+    WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8191su.ko"
 
-#WPA_SUPPLICANT_VERSION              := VER_0_8_X
-#BOARD_WPA_SUPPLICANT_DRIVER         := NL80211
-#BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
-#BOARD_HOSTAPD_DRIVER                := NL80211
-#BOARD_HOSTAPD_PRIVATE_LIB           := lib_driver_cmd_rtl
-#
-# Realtek driver has FW embedded inside, and will automatically load FW
-# at NIC initialization process. So there is no need to set these 
-# 5 variables.
-WIFI_DRIVER_MODULE_ARG           := ""
-WIFI_FIRMWARE_LOADER             := ""
-WIFI_DRIVER_FW_PATH_STA          := ""
-WIFI_DRIVER_FW_PATH_AP           := ""
-WIFI_DRIVER_FW_PATH_P2P          := ""
-WIFI_DRIVER_FW_PATH_PARAM        := ""
+    WIFI_DRIVER_MODULE_NAME2	        := "rtl8192cu"
+    WIFI_DRIVER_MODULE_PATH2             := "/system/lib/modules/rtl8192cu.ko"
+    
+
+    # Realtek driver has FW embedded inside, and will automatically load FW
+    # at NIC initialization process. So there is no need to set these 
+    # 5 variables.
+    WIFI_DRIVER_MODULE_ARG           := ""
+    WIFI_FIRMWARE_LOADER             := ""
+    WIFI_DRIVER_FW_PATH_STA          := ""
+    WIFI_DRIVER_FW_PATH_AP           := ""
+    WIFI_DRIVER_FW_PATH_P2P          := ""
+    WIFI_DRIVER_FW_PATH_PARAM        := ""
+endif
 
 # Webkit
 ENABLE_WEBGL := true
