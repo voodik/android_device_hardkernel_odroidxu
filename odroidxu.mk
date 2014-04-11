@@ -128,6 +128,7 @@ PRODUCT_PACKAGES += \
 
 #Hardkernel
 PRODUCT_PACKAGES += \
+	OdroidUpdater \
 	Utility
 
 # Samsung
