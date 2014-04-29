@@ -8,4 +8,10 @@
 /dev/block/mmcblk0p4    /cache              ext4      noatime,nosuid,nodev,nomblk_io_submit,errors=panic    wait
 /dev/block/mmcblk0p3    /data               ext4      noatime,nosuid,nodev,nomblk_io_submit,noauto_da_alloc,errors=panic,discard    wait
 
-/devices/platform/dw_mmc.0/mmc_host/mmc0    auto auto    defaults                                voldmanaged=sdcard0:auto,noemulatedsd
+/devices/platform/dw_mmc.0/mmc_host/mmc0	auto	auto    defaults			voldmanaged=sdcard0:auto,noemulatedsd
+
+# SD card
+/devices/platform/dw_mmc.2/mmc_host/mmc1	auto	vfat	defaults			voldmanaged=sdcard1:auto
+
+# USB storage
+/devices/platform/s5p-ehci			auto	auto	defaults			voldmanaged=usbdisk:auto
