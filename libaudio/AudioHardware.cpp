@@ -1553,7 +1553,7 @@ status_t AudioHardware::AudioStreamInALSA::set(
     mChannels = *pChannels;
     mChannelCount = AudioSystem::popCount(mChannels);
     mSampleRate = rate;
-//    if (mSampleRate != AUDIO_HW_OUT_SAMPLERATE) {
+    if (mSampleRate != AUDIO_HW_OUT_SAMPLERATE) {
         mBufferProvider.mProvider.get_next_buffer = getNextBufferStatic;
         mBufferProvider.mProvider.release_buffer = releaseBufferStatic;
         mBufferProvider.mInputStream = this;
@@ -1568,7 +1568,7 @@ status_t AudioHardware::AudioStreamInALSA::set(
             mDownSampler = NULL;
             return status;
         }
-//    }
+    }
     mInputBuf = new int16_t[AUDIO_HW_IN_PERIOD_SZ * mChannelCount];
 
     return NO_ERROR;
