@@ -39,8 +39,9 @@ PRODUCT_PACKAGES += \
     init.recovery.odroidxu.rc
 
 # Audio
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
+    $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml
 
 #PRODUCT_PACKAGES += \
 #    audio.a2dp.default \
@@ -60,8 +61,8 @@ PRODUCT_PACKAGES += \
 	
 
 # Camera
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
 
 PRODUCT_PACKAGES += \
     camera.odroidxu \
@@ -125,6 +126,28 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	rild \
 	chat
+
+#USB 3g support
+PRODUCT_COPY_FILES += \
+    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml \
+    vendor/cm/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml \
+    $(LOCAL_PATH)/usb3g/etc/ppp/ip-down:system/etc/ppp/ip-down \
+    $(LOCAL_PATH)/usb3g/etc/ppp/ip-up:system/etc/ppp/ip-up \
+    $(LOCAL_PATH)/usb3g/etc/ppp/call-pppd:system/etc/ppp/call-pppd \
+    $(LOCAL_PATH)/usb3g/etc/operator_table:system/etc/operator_table \
+    $(LOCAL_PATH)/usb3g/bin/usb_modeswitch.sh:system/bin/usb_modeswitch.sh \
+    $(LOCAL_PATH)/usb3g/bin/usb_modeswitch:system/bin/usb_modeswitch \
+    $(LOCAL_PATH)/usb3g/lib/libril-rk29-dataonly.so:system/lib/libril-rk29-dataonly.so
+
+modeswitch_files := $(shell ls $(LOCAL_PATH)/usb3g/etc/usb_modeswitch.d)
+PRODUCT_COPY_FILES += \
+    $(foreach file, $(modeswitch_files), \
+    $(LOCAL_PATH)/usb3g/etc/usb_modeswitch.d/$(file):system/etc/usb_modeswitch.d/$(file))
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    rild.libpath=/system/lib/libril-rk29-dataonly.so \
+    ril.function.dataonly=1
+
 
 #Hardkernel
 PRODUCT_PACKAGES += \
