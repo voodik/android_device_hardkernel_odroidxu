@@ -148,6 +148,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/lib/libril-rk29-dataonly.so \
     ril.function.dataonly=1
 
+#USB GPS support
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/usb3g/lib/gps.default.so:system/lib/hw/gps.default.so \
+    $(LOCAL_PATH)/configs/init.gps.sh:system/etc/init.gps.sh
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.gps=ttyUSB3 \
+    ro.kernel.android.gps.speed=4800
 
 #Hardkernel
 PRODUCT_PACKAGES += \
@@ -199,7 +207,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
 

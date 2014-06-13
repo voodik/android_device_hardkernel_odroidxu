@@ -170,6 +170,26 @@ service insmod_usb_audio /system/bin/insmod /system/lib/modules/snd-usb-audio.ko
     disabled
     oneshot
 
+service insmod_pl2303 /system/bin/insmod /system/lib/modules/pl2303.ko
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+service insmod_ftdi /system/bin/insmod /system/lib/modules/ftdi_sio.ko
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+service gps_cfg /system/bin/sh /system/etc/init.gps.sh
+    class main
+    user root
+    disabled
+    oneshot
+
 on property:init.svc.insmod_ax88179=stopped
     start insmod_smsc95xx
 
@@ -219,10 +239,18 @@ service bugreport /system/bin/bugmailer.sh -v
     oneshot
     keycodes 114 115 116
 
-#on property:init.svc.bootanim=stopped
+on property:init.svc.bootanim=stopped
 #    # start gpsd late to prevent it from changing /data/system
+     start insmod_pl2303
 #    start gpsd
 #    start camera_id
+
+on property:init.svc.insmod_pl2303=stopped
+     start insmod_ftdi
+
+on property:init.svc.insmod_ftdi=stopped
+     #set usb gps speed
+     start gps_cfg
 
 on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
