@@ -11,7 +11,7 @@
 /devices/platform/dw_mmc.0/mmc_host/mmc0	auto	auto    defaults			voldmanaged=sdcard0:auto,noemulatedsd
 
 # SD card
-/devices/platform/dw_mmc.2/mmc_host/mmc1	auto	vfat	defaults			voldmanaged=sdcard1:auto
+/devices/platform/dw_mmc.2/mmc_host/mmc1	auto	auto	defaults			voldmanaged=sdcard1:auto
 
 # USB storage
 /devices/platform/s5p-ehci			auto	auto	defaults			voldmanaged=usbdisk:auto
