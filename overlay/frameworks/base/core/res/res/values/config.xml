@@ -328,4 +328,7 @@
          true here reverses that logic. -->
     <bool name="config_reverseDefaultRotation">true</bool>
 
+    <!--  Maximum number of supported users -->
+    <integer name="config_multiuserMaximumUsers">8</integer>
+
 </resources>
