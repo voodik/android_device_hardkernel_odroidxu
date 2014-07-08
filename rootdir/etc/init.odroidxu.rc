@@ -12,29 +12,36 @@ on init
     mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
     mkdir /storage/sdcard1 0700 root root
 
-    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
-    mkdir /storage/usbdisk 0700 root root
+    mkdir /mnt/media_rw/usb2host 0700 media_rw media_rw
+    mkdir /storage/usb2host 0700 root root
+
+    mkdir /mnt/media_rw/usb3device 0700 media_rw media_rw
+    mkdir /storage/usb3device 0700 root root
+
+    mkdir /mnt/media_rw/usb3host 0700 media_rw media_rw
+    mkdir /storage/usb3host 0700 root root
 
     symlink /storage/sdcard0/.android_secure /sdcard/.android_secure
     symlink /storage/sdcard0/.android_secure /mnt/sdcard/.android_secure
 
     export EXTERNAL_STORAGE /storage/sdcard0
-#    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-#    export EMULATED_STORAGE_TARGET /storage/emulated
-    export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk
+    export SECONDARY_STORAGE /storage/sdcard1:/storage/usb2host:/storage/usb3device:/storage/usb3host
 
-    # for backwards compatibility
+    # for backwards compatibilit
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
-#    symlink /storage/emulated/legacy /storage/sdcard0
-#    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
     symlink /storage/sdcard1 /extSdCard
     symlink /storage/sdcard1 /mnt/extSdCard
     symlink /storage/sdcard1 /external_sd
-    symlink /storage/usbdisk /usbdisk
-    symlink /storage/usbdisk /mnt/usbdisk
+    symlink /storage/usb2host /usb2host
+    symlink /storage/usb2host /mnt/usb2host
+    symlink /storage/usb3device /usb3device
+    symlink /storage/usb3device /mnt/usb3device
+    symlink /storage/usb3host /usb3host
+    symlink /storage/usb3host /mnt/usb3host
 
-    mkdir /efs 0771 radio system
+
+     mkdir /efs 0771 radio system
 #    symlink /dev/block/mmcblk0p13 /dev/mbin0
 #    restorecon /dev/mbin0
 
@@ -45,7 +52,7 @@ on init
 
 on fs
     mount_all /fstab.odroidxu
-#    setprop ro.crypto.fuse_sdcard true
+    setprop ro.crypto.fuse_sdcard true
     chmod 4755 /system/bin/pppd
 
 on post-fs
@@ -135,12 +142,19 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard0 /s
     class late_start
     disabled
 
-
 service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
     disabled
 
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk /storage/usbdisk
+service fuse_usb2host /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usb2host /storage/usb2host
+    class late_start
+    disabled
+
+service fuse_usb3device /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usb3device /storage/usb3device
+    class late_start
+    disabled
+
+service fuse_usb3host /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usb3host /storage/usb3host
     class late_start
     disabled
 

@@ -48,9 +48,16 @@
              android:removable="true" />
 
     <!-- external usb storage -->
-    <storage android:mountPoint="/storage/usbdisk"
+    <storage android:mountPoint="/storage/usb2host"
              android:storageDescription="@string/storage_usb"
              android:primary="false"
              android:removable="true" />
-
+    <storage android:mountPoint="/storage/usb3device"
+             android:storageDescription="@string/storage_usb"
+             android:primary="false"
+             android:removable="true" />
+    <storage android:mountPoint="/storage/usb3host"
+             android:storageDescription="@string/storage_usb"
+             android:primary="false"
+             android:removable="true" />
 </StorageList>
