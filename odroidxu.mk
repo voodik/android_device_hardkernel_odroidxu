@@ -58,7 +58,7 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	libaudioutils \
 	tinymix
-	
+
 
 # Camera
 PRODUCT_COPY_FILES += \
@@ -118,8 +118,10 @@ PRODUCT_PACKAGES += \
     libExynosOMX_Core \
     libOMX.Exynos.MPEG4.Decoder \
     libOMX.Exynos.AVC.Decoder \
+    libOMX.Exynos.VP8.Decoder \
     libOMX.Exynos.MPEG4.Encoder \
     libOMX.Exynos.AVC.Encoder \
+    libOMX.Exynos.MP3.Decoder \
     libstagefrighthw
 
 # Radio
