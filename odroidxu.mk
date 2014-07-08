@@ -28,6 +28,7 @@ TARGET_SCREEN_WIDTH := 720
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.odroidxu \
+    fstab.odroidxu.sdboot \
     init.odroidxu.rc \
     init.odroidxu.usb.rc \
     init.odroidxu.wifi.rc \
