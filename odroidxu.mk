@@ -83,8 +83,8 @@ PRODUCT_PACKAGES += \
 
 # HW composer
 PRODUCT_PACKAGES += \
-    hwcomposer.exynos5 \
-    libion
+    hwcomposer.exynos5
+#    libion
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
