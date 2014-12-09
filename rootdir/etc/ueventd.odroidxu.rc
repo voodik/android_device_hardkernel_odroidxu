@@ -43,6 +43,11 @@
 /dev/video18              0660   system     system
 /dev/video19              0660   system     system
 
+# for UVC WEBCAM
+/dev/video0               0666   system     camera
+/dev/video1               0666   system     camera
+/dev/video2               0666   system     camera
+
 # FIMG2D
 /dev/fimg2d               0666   system     graphics
 
