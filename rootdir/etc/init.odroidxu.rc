@@ -57,7 +57,7 @@ on fs
 
 on post-fs
     # Increase max readahead size to 256 KB
-    write /sys/block/mmcblk0/queue/read_ahead_kb 256
+    write /sys/block/mmcblk0/queue/read_ahead_kb 512
     # for controlling write performance boosting
     chown system radio /sys/block/mmcblk0/bkops_en
     chmod 0664 /sys/block/mmcblk0/bkops_en
@@ -171,6 +171,27 @@ service insmod_smsc95xx /system/bin/insmod /system/lib/modules/smsc95xx.ko
     disabled
     oneshot
 
+service insmod_ralink1 /system/bin/insmod /system/lib/modules/rt2x00lib.ko
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+service insmod_ralink2 /system/bin/insmod /system/lib/modules/rt2x00usb.ko
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+service insmod_ralink3 /system/bin/insmod /system/lib/modules/rt2800lib.ko
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
 service insmod_usbmidi /system/bin/insmod /system/lib/modules/snd-usbmidi-lib.ko
     class core
     user root
@@ -207,26 +228,18 @@ service gps_cfg /system/bin/sh /system/etc/init.gps.sh
 on property:init.svc.insmod_ax88179=stopped
     start insmod_smsc95xx
 
+on property:ro.hardkernel.wifi2=true
+    start insmod_ralink1
+
+on property:init.svc.insmod_ralink1=stopped
+    start insmod_ralink2
+
+on property:init.svc.insmod_ralink2=stopped
+    start insmod_ralink3
+
 on property:init.svc.insmod_usbmidi=stopped
     start insmod_usb_audio
 
-#service cpboot-daemon /system/bin/cbd -d -p 13
-#    class main
-#    user root
-#    group radio cache inet misc audio sdcard_rw log sdcard_r shell
-
-# GPS
-#service gpsd /system/bin/gpsd -c /system/etc/gps.xml
-#    class main
-#    user gps
-#    group system inet net_raw
-#    disabled
-
-#service camera_id /system/bin/sh /system/etc/init.exynos.cam.sh
-#    class main
-#    user root
-#    disabled
-#    oneshot
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
     disabled
@@ -255,13 +268,6 @@ service iprenew_eth1 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
-
-# SA, System SW, SAMSUNG
-service bugreport /system/bin/bugmailer.sh -v
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116
 
 on property:init.svc.bootanim=stopped
 #    # start gpsd late to prevent it from changing /data/system
