@@ -802,15 +802,31 @@ struct pcm *AudioHardware::openPcmOut_l()
 	    /* Test for USB and adjust */
 	    struct mixer*   mMixerAlternate = mixer_open(1);
 	    bool haveAlternateCard = (mMixerAlternate != NULL);
+	    bool haveEasycap = false;
+	    if (haveAlternateCard) {
+	    if (strcmp(mixer_get_name(mMixerAlternate),"USB 2.0 Video Capture Controlle") == 0 ){
+			haveAlternateCard = false;
+			mixer_close(mMixerAlternate);
+			ALOGE("Easycap Detected !");
+			struct mixer*   mMixerAlternate = mixer_open(2);
+			bool haveAlternateCard = (mMixerAlternate != NULL);
+			haveEasycap = true;
+			}
+
+	    }
 	
 	    if (haveAlternateCard) {
-	        config.rate = 48000;
+	        config.rate = 44100;
 	        mixer_close(mMixerAlternate);
 	    }
 
         TRACE_DRIVER_IN(DRV_PCM_OPEN)
 	    ALOGV("Have alternate card: %d using %dHz rate",haveAlternateCard, config.rate);
+	    if (haveEasycap){
+	    mPcm = pcm_open(haveAlternateCard ? 2 : 0, 0, flags, &config);
+	    } else {
 	    mPcm = pcm_open(haveAlternateCard ? 1 : 0, 0, flags, &config);
+	    }
         TRACE_DRIVER_OUT
         if (!pcm_is_ready(mPcm)) {
             ALOGE("openPcmOut_l() cannot open pcm_out driver: %s\n", pcm_get_error(mPcm));
@@ -2017,16 +2033,32 @@ status_t AudioHardware::AudioStreamInALSA::open_l()
     /* Test for USB and adjust */
     struct mixer*   mMixerAlternate = mixer_open(1);
     bool haveAlternateCard = (mMixerAlternate != NULL);
+    bool haveEasycap = false;
+    if (haveAlternateCard) {
+		if (strcmp(mixer_get_name(mMixerAlternate),"USB 2.0 Video Capture Controlle") == 0 ){
+			haveAlternateCard = false;
+			mixer_close(mMixerAlternate);
+			ALOGE("Easycap Detected !");
+			struct mixer*   mMixerAlternate = mixer_open(2);
+			bool haveAlternateCard = (mMixerAlternate != NULL);
+			haveEasycap = true;
+		}
+
+    }
 
     if (haveAlternateCard) {
-        config.rate = 48000;
+        config.rate = 44100;
         mixer_close(mMixerAlternate);
     }
 
     ALOGV("open pcm_in driver");
     TRACE_DRIVER_IN(DRV_PCM_OPEN)
     ALOGV("Have alternate card: %d using %dHz rate",haveAlternateCard, config.rate);
+    if (haveEasycap){
+    mPcm = pcm_open(haveAlternateCard ? 2 : 0, 0, flags, &config);
+    } else {
     mPcm = pcm_open(haveAlternateCard ? 1 : 0, 0, flags, &config);
+    }
     TRACE_DRIVER_OUT
     if (!pcm_is_ready(mPcm)) {
         ALOGE("cannot open pcm_in driver: %s\n", pcm_get_error(mPcm));
