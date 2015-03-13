@@ -53,13 +53,18 @@ PRODUCT_COPY_FILES += \
 
 # audio
 PRODUCT_PACKAGES += \
-	audio_policy.odroidxu \
 	audio.primary.odroidxu \
 	audio.a2dp.default \
 	audio.usb.default \
 	libaudioutils \
 	tinymix
 
+# wifi
+PRODUCT_PACKAGES += \
+        hostapd \
+        wpa_supplicant.conf \
+        dhcpcd.conf \
+        wpa_supplicant
 
 # Camera
 PRODUCT_COPY_FILES += \
@@ -83,8 +88,8 @@ PRODUCT_PACKAGES += \
 
 # HW composer
 PRODUCT_PACKAGES += \
-    hwcomposer.exynos5
-#    libion
+    hwcomposer.exynos5 \
+    libion
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -102,6 +107,10 @@ PRODUCT_PACKAGES += \
 
 # Media profile
 PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml  \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
@@ -176,14 +185,13 @@ PRODUCT_PACKAGES += \
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
-    ro.secure=0 \
-    persist.sys.root_access=3
+    ro.secure=0 
 
 
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mass_storage \
+    persist.sys.usb.config=mtp \
     ro.kernel.android.checkjni=0 
 
 # Enable repeatable keys in CWM
@@ -196,7 +204,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
     ro.adb.secure=0 \
     ro.secure=0 \
-    persist.sys.root_access=3 \
     debug.sf.no_hw_vsync=1 \
     mouse.right.click=back \
     ro.rfkilldisabled=1 \
@@ -209,6 +216,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardwardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
@@ -219,7 +227,7 @@ PRODUCT_COPY_FILES += \
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
-PRODUCT_AAPT_PREF_CONFIG := xhdpi xxhdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_CHARACTERISTICS := tablet
 

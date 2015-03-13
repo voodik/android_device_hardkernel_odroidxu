@@ -25,6 +25,7 @@ LOCAL_SRC_FILES:= \
 LOCAL_C_INCLUDES += \
 	$(TOP)/frameworks/base/include/android_runtime \
 	$(TOP)/bionic \
+	$(TOP)/system/media/camera/include \
     $(TOP)/external/expat/lib \
     $(TOP)/external/stlport/stlport \
     $(TOP)/external/jpeg \
