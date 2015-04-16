@@ -194,6 +194,7 @@ BOARD_SEPOLICY_UNION := \
     device.te \
     domain.te \
     gpsd.te \
+    insmod.te \
     mediaserver.te \
     surfaceflinger.te \
     system_server.te
