@@ -93,8 +93,8 @@ PRODUCT_PACKAGES += \
     keystore.exynos5
 
 # Lights
-PRODUCT_PACKAGES += \
-    lights.odroidxu
+#PRODUCT_PACKAGES += \
+#    lights.odroidxu
 
 # Media profile
 PRODUCT_COPY_FILES += \
